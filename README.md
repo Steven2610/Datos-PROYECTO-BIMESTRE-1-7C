@@ -4,8 +4,8 @@
 Práctica bimestral · **Explotación de datos en ecosistemas heterogéneos** · UTPL
 Entrega actual: **1B – Obtención de datos y diseño del modelo de conocimiento**
 
-> Integrantes: _(completar)_
-> Docente: _(completar)_
+> Grupo 4 · Integrantes: Steven Vega, Andrés Cuenca, Santiago Matute
+> Docente: Ángel Eduardo Encalada Encalada
 
 ---
 
@@ -14,7 +14,7 @@ Entrega actual: **1B – Obtención de datos y diseño del modelo de conocimient
 Proyecto de ciudades inteligentes que analiza los **accidentes de tránsito de Chicago** y las **personas involucradas**
 para responder dónde, cuándo y cómo ocurren los siniestros y quiénes resultan lesionados.
 Los datos provienen del Portal de Datos Abiertos de la Ciudad de Chicago y se modelan con un MER y un esquema RDF que
-reutiliza vocabularios abiertos (Dublin Core, FOAF, SKOS, Schema.org, GeoSPARQL y DBpedia Ontology).
+reutiliza vocabularios abiertos (DBpedia Ontology, FOAF, Dublin Core, SKOS y GeoSPARQL).
 
 ## 2. Estructura del repositorio
 
@@ -41,11 +41,9 @@ Datos-PROYECTO-BIMESTRE-1-7C/
 │   ├── catalogos.ttl                      ← valores SKOS de los catálogos (impacto, tipo de usuario, lesión)
 │   ├── ejemplo_instancias.ttl             ← 1 accidente + 2 personas, solo ilustrativo
 │   └── esquema_rdf.png                    ← diagrama del esquema RDF
-├── scripts/
-│   ├── etl_chicago.R                      ← limpieza, filtrado y muestreo (genera datos/procesados)
-│   └── generar_catalogos.py               ← genera rdf/catalogos.ttl y rdf/ejemplo_instancias.ttl
-└── docs/
-    └── informe_parte_II.md                ← texto de la Parte II del informe (1B)
+└── scripts/
+    ├── etl_chicago.R                      ← limpieza, filtrado y muestreo (genera datos/procesados)
+    └── generar_catalogos.py               ← genera rdf/catalogos.ttl y rdf/ejemplo_instancias.ttl
 ```
 
 > Los CSV limpios van comprimidos en `.zip` porque GitHub no acepta archivos de más de 100 MB
@@ -93,14 +91,13 @@ Un accidente *involucra* (1,N) personas, ocurre en (1,1) zona policial y tiene (
 
 | Vocabulario | Prefijo | Namespace | Términos reutilizados |
 |---|---|---|---|
-| Dublin Core Terms | `dcterms:` | `http://purl.org/dc/terms/` | `identifier`, `date` (como superpropiedades) |
-| FOAF | `foaf:` | `http://xmlns.com/foaf/0.1/` | `Person` |
+| Dublin Core Terms | `dcterms:` | `http://purl.org/dc/terms/` | `identifier`, `date` |
+| FOAF | `foaf:` | `http://xmlns.com/foaf/0.1/` | `Person`, `age`, `gender` |
 | SKOS | `skos:` | `http://www.w3.org/2004/02/skos/core#` | `Concept`, `ConceptScheme`, `prefLabel`, `inScheme` |
-| Schema.org | `schema:` | `https://schema.org/` | `gender` |
 | GeoSPARQL | `geo:` | `http://www.opengis.net/ont/geosparql#` | `Feature`, `Geometry`, `hasGeometry`, `asWKT`, `wktLiteral` |
 | DBpedia Ontology | `dbo:` | `http://dbpedia.org/ontology/` | `Event` |
 
-Justificación, tabla de correspondencia y calidad de datos: [`docs/informe_parte_II.md`](docs/informe_parte_II.md).
+La justificación de cada término, la tabla de correspondencia y el análisis de calidad están en el informe técnico (PDF) entregado en el EVA.
 
 ## 6. Enlaces directos (para el informe)
 

@@ -1,224 +1,130 @@
-############################################################################
-#  Esquema semántico RDF – Seguridad vial en Chicago
-#  Práctica bimestral 1B · Explotación de datos en ecosistemas heterogéneos
-#  Fuentes: Traffic Crashes - Crashes (85ca-t3if) y
-#           Traffic Crashes - People  (u6pd-qa9d), City of Chicago Data Portal
-#
-#  Convenciones:
-#    - Clases propias en UpperCamelCase (vial:Accidente)
-#    - Propiedades propias en lowerCamelCase (vial:ocurreEnZona)
-#    - A los términos reutilizados NO se les redefine dominio ni rango
-#      (se evita modificar vocabularios ajenos). Cuando hace falta un
-#      dominio/rango específico se crea una subpropiedad propia.
-############################################################################
-
 @prefix vial:    <http://example.org/vialchicago#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
-@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
-@prefix schema:  <https://schema.org/> .
-@prefix geo:     <http://www.opengis.net/ont/geosparql#> .
 @prefix dbo:     <http://dbpedia.org/ontology/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix geo:     <http://www.opengis.net/ont/geosparql#> .
 
-# --------------------------------------------------------------------------
+# ---------------------------------------------------------------
 # Ontología
-# --------------------------------------------------------------------------
-<http://example.org/vialchicago>
-    a owl:Ontology ;
-    rdfs:label "Ontología de seguridad vial en Chicago"@es ;
-    dcterms:description "Esquema para representar accidentes de tránsito, personas involucradas, zonas policiales y catálogos de clasificación a partir de los datos abiertos de Chicago."@es ;
-    dcterms:source <https://data.cityofchicago.org/d/85ca-t3if> ,
-                   <https://data.cityofchicago.org/d/u6pd-qa9d> ;
-    owl:versionInfo "1.0 (entrega 1B)" .
+# ---------------------------------------------------------------
+<http://example.org/vialchicago> a owl:Ontology ;
+    rdfs:label "Esquema de movilidad y seguridad vial de Chicago"@es ;
+    rdfs:comment "Esquema semántico para accidentes de tránsito, personas involucradas, zonas policiales y catálogos de clasificación."@es .
 
-# --------------------------------------------------------------------------
-# Clases reutilizadas (solo se declaran para que el esquema sea autocontenido)
-# --------------------------------------------------------------------------
-dbo:Event      a owl:Class ; rdfs:isDefinedBy <http://dbpedia.org/ontology/> .
-geo:Feature    a owl:Class ; rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> .
-geo:Geometry   a owl:Class ; rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> .
-foaf:Person    a owl:Class ; rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
-skos:Concept   a owl:Class ; rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core> .
+# ---------------------------------------------------------------
+# Términos reutilizados (declaración mínima)
+# ---------------------------------------------------------------
+dbo:Event      a owl:Class ;             rdfs:isDefinedBy <http://dbpedia.org/ontology/> .
+foaf:Person    a owl:Class ;             rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
+foaf:age       a owl:DatatypeProperty ;  rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
+foaf:gender    a owl:DatatypeProperty ;  rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
 
-# --------------------------------------------------------------------------
-# Clases propias
-# --------------------------------------------------------------------------
-vial:Accidente
-    a owl:Class ;
-    rdfs:subClassOf dbo:Event , geo:Feature ;
-    rdfs:label "Accidente de tránsito"@es , "Traffic crash"@en ;
-    rdfs:comment "Siniestro vial registrado por el Departamento de Policía de Chicago (formulario SR1050). Es un evento con ubicación geográfica."@es .
+dcterms:identifier a rdf:Property ;      rdfs:isDefinedBy <http://purl.org/dc/terms/> .
+dcterms:date       a rdf:Property ;      rdfs:isDefinedBy <http://purl.org/dc/terms/> .
 
-vial:Persona
-    a owl:Class ;
+skos:Concept       a owl:Class ;         rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+skos:ConceptScheme a owl:Class ;         rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+skos:inScheme      a rdf:Property ;      rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+skos:prefLabel     a rdf:Property ;      rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+
+geo:Feature     a owl:Class ;            rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+geo:Geometry    a owl:Class ;            rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+geo:hasGeometry a owl:ObjectProperty ;   rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+geo:asWKT       a owl:DatatypeProperty ; rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+
+# ---------------------------------------------------------------
+# Clases propias y jerarquías
+# ---------------------------------------------------------------
+vial:Accidente a owl:Class ;
+    rdfs:subClassOf dbo:Event, geo:Feature ;
+    rdfs:label "Accidente"@es ;
+    rdfs:comment "Accidente de tránsito reportado por la policía de Chicago."@es .
+
+vial:Persona a owl:Class ;
     rdfs:subClassOf foaf:Person ;
-    rdfs:label "Persona involucrada"@es , "Person involved"@en ;
-    rdfs:comment "Persona que participa en un accidente (conductor, pasajero, peatón, ciclista, etc.)."@es .
+    rdfs:label "Persona"@es ;
+    rdfs:comment "Persona involucrada en un accidente de tránsito."@es .
 
-vial:ZonaPolicial
-    a owl:Class ;
+vial:ZonaPolicial a owl:Class ;
     rdfs:subClassOf geo:Feature ;
-    rdfs:label "Zona policial (beat)"@es , "Police beat"@en ;
-    rdfs:comment "Área de patrullaje más pequeña del CPD, identificada por un código de 4 dígitos."@es .
+    rdfs:label "Zona policial"@es ;
+    rdfs:comment "Zona (beat) policial donde ocurre un accidente."@es .
 
-vial:Catalogo
-    a owl:Class ;
+vial:Catalogo a owl:Class ;
     rdfs:subClassOf skos:Concept ;
     rdfs:label "Catálogo"@es ;
-    rdfs:comment "Superclase de los valores controlados (vocabularios cerrados) que clasifican accidentes y personas."@es .
+    rdfs:comment "Concepto de un vocabulario controlado del proyecto."@es .
 
-vial:TipoPrimerImpacto
-    a owl:Class ;
+vial:TipoUsuario a owl:Class ;
+    rdfs:subClassOf vial:Catalogo ;
+    rdfs:label "Tipo de usuario"@es ;
+    rdfs:comment "Rol de la persona en el accidente: conductor, pasajero, peatón, ciclista, etc."@es .
+
+vial:ClasificacionLesion a owl:Class ;
+    rdfs:subClassOf vial:Catalogo ;
+    rdfs:label "Clasificación de la lesión"@es ;
+    rdfs:comment "Gravedad de la lesión reportada para la persona."@es .
+
+vial:TipoPrimerImpacto a owl:Class ;
     rdfs:subClassOf vial:Catalogo ;
     rdfs:label "Tipo de primer impacto"@es ;
-    rdfs:comment "Tipo de la primera colisión del accidente (REAR END, TURNING, PEDESTRIAN, ...)."@es .
+    rdfs:comment "Tipo del primer impacto del accidente."@es .
 
-vial:TipoUsuario
-    a owl:Class ;
-    rdfs:subClassOf vial:Catalogo ;
-    rdfs:label "Tipo de usuario vial"@es ;
-    rdfs:comment "Rol de la persona en el accidente (DRIVER, PASSENGER, PEDESTRIAN, BICYCLE, ...)."@es .
+# ---------------------------------------------------------------
+# Esquemas de conceptos (un vocabulario controlado por catálogo)
+# ---------------------------------------------------------------
+vial:EsquemaTipoUsuario a skos:ConceptScheme ;
+    rdfs:label "Tipos de usuario"@es .
 
-vial:ClasificacionLesion
-    a owl:Class ;
-    rdfs:subClassOf vial:Catalogo ;
-    rdfs:label "Clasificación de lesión"@es ;
-    rdfs:comment "Gravedad de la lesión sufrida por la persona (FATAL, INCAPACITATING INJURY, ...)."@es .
+vial:EsquemaClasificacionLesion a skos:ConceptScheme ;
+    rdfs:label "Clasificaciones de lesión"@es .
 
-# Esquemas de conceptos SKOS que agrupan cada catálogo
-vial:EsquemaTipoPrimerImpacto   a skos:ConceptScheme ; rdfs:label "Catálogo de tipos de primer impacto"@es .
-vial:EsquemaTipoUsuario         a skos:ConceptScheme ; rdfs:label "Catálogo de tipos de usuario vial"@es .
-vial:EsquemaClasificacionLesion a skos:ConceptScheme ; rdfs:label "Catálogo de clasificaciones de lesión"@es .
+vial:EsquemaTipoPrimerImpacto a skos:ConceptScheme ;
+    rdfs:label "Tipos de primer impacto"@es .
 
-# --------------------------------------------------------------------------
+# ---------------------------------------------------------------
 # Propiedades de objeto propias
-# --------------------------------------------------------------------------
-vial:ocurreEnZona
-    a owl:ObjectProperty , owl:FunctionalProperty ;
-    rdfs:label "ocurre en zona"@es ;
+# ---------------------------------------------------------------
+vial:ocurreEnZona a owl:ObjectProperty, owl:FunctionalProperty ;
     rdfs:domain vial:Accidente ;
     rdfs:range  vial:ZonaPolicial ;
-    rdfs:comment "Zona policial (beat) donde ocurrió el accidente. Cardinalidad (1,1) desde Accidente."@es .
+    rdfs:label "ocurre en zona"@es .
 
-vial:involucraPersona
-    a owl:ObjectProperty ;
-    rdfs:label "involucra persona"@es ;
+vial:involucraPersona a owl:ObjectProperty ;
     rdfs:domain vial:Accidente ;
     rdfs:range  vial:Persona ;
-    owl:inverseOf vial:participaEn ;
-    rdfs:comment "Persona que participa en el accidente. Un accidente involucra (1,N) personas."@es .
+    rdfs:label "involucra persona"@es .
 
-vial:participaEn
-    a owl:ObjectProperty , owl:FunctionalProperty ;
-    rdfs:label "participa en"@es ;
+vial:participaEn a owl:ObjectProperty, owl:FunctionalProperty ;
+    owl:inverseOf vial:involucraPersona ;
     rdfs:domain vial:Persona ;
     rdfs:range  vial:Accidente ;
-    rdfs:comment "Inversa de vial:involucraPersona. Cada persona pertenece a exactamente un accidente (el PERSON_ID es único por accidente)."@es .
+    rdfs:label "participa en"@es .
 
-vial:tipoPrimerImpacto
-    a owl:ObjectProperty , owl:FunctionalProperty ;
-    rdfs:label "tipo de primer impacto"@es ;
+vial:tipoUsuario a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain vial:Persona ;
+    rdfs:range  vial:TipoUsuario ;
+    rdfs:label "tipo de usuario"@es .
+
+vial:clasificacionLesion a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain vial:Persona ;
+    rdfs:range  vial:ClasificacionLesion ;
+    rdfs:label "clasificación de lesión"@es .
+
+vial:tipoPrimerImpacto a owl:ObjectProperty, owl:FunctionalProperty ;
     rdfs:domain vial:Accidente ;
-    rdfs:range  vial:TipoPrimerImpacto .
+    rdfs:range  vial:TipoPrimerImpacto ;
+    rdfs:label "tipo de primer impacto"@es .
 
-vial:tipoUsuario
-    a owl:ObjectProperty , owl:FunctionalProperty ;
-    rdfs:label "tipo de usuario"@es ;
-    rdfs:domain vial:Persona ;
-    rdfs:range  vial:TipoUsuario .
-
-vial:clasificacionLesion
-    a owl:ObjectProperty , owl:FunctionalProperty ;
-    rdfs:label "clasificación de lesión"@es ;
-    rdfs:domain vial:Persona ;
-    rdfs:range  vial:ClasificacionLesion .
-
-# --------------------------------------------------------------------------
-# Propiedades de objeto reutilizadas (GeoSPARQL)
-# --------------------------------------------------------------------------
-geo:hasGeometry
-    a owl:ObjectProperty ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
-    rdfs:comment "Uso en el proyecto: vincula un vial:Accidente con su geometría puntual (geo:Geometry). Dominio oficial: geo:Feature; rango: geo:Geometry."@es .
-
-# --------------------------------------------------------------------------
+# ---------------------------------------------------------------
 # Propiedades de datos propias
-# (las subpropiedades especializan términos de Dublin Core)
-# --------------------------------------------------------------------------
-vial:idAccidente
-    a owl:DatatypeProperty , owl:FunctionalProperty ;
-    rdfs:subPropertyOf dcterms:identifier ;
-    rdfs:label "identificador del accidente"@es ;
+# ---------------------------------------------------------------
+vial:nombreCalle a owl:DatatypeProperty ;
     rdfs:domain vial:Accidente ;
     rdfs:range  xsd:string ;
-    rdfs:comment "CRASH_RECORD_ID (hash SHA-512 de 128 caracteres)."@es .
-
-vial:idPersona
-    a owl:DatatypeProperty , owl:FunctionalProperty ;
-    rdfs:subPropertyOf dcterms:identifier ;
-    rdfs:label "identificador de la persona"@es ;
-    rdfs:domain vial:Persona ;
-    rdfs:range  xsd:string ;
-    rdfs:comment "PERSON_ID (p. ej. O2431570; prefijo O = ocupante, P = peatón/ciclista)."@es .
-
-vial:codigoZona
-    a owl:DatatypeProperty , owl:FunctionalProperty ;
-    rdfs:subPropertyOf dcterms:identifier ;
-    rdfs:label "código de zona policial"@es ;
-    rdfs:domain vial:ZonaPolicial ;
-    rdfs:range  xsd:string ;
-    rdfs:comment "BEAT_OF_OCCURRENCE normalizado a 4 dígitos (p. ej. 0313)."@es .
-
-vial:fechaHora
-    a owl:DatatypeProperty , owl:FunctionalProperty ;
-    rdfs:subPropertyOf dcterms:date ;
-    rdfs:label "fecha y hora del accidente"@es ;
-    rdfs:domain vial:Accidente ;
-    rdfs:range  xsd:dateTime ;
-    rdfs:comment "CRASH_DATE convertido a ISO 8601."@es .
-
-vial:nombreCalle
-    a owl:DatatypeProperty , owl:FunctionalProperty ;
-    rdfs:label "nombre de la calle"@es ;
-    rdfs:domain vial:Accidente ;
-    rdfs:range  xsd:string ;
-    rdfs:comment "STREET_NAME normalizado a mayúsculas."@es .
-
-vial:edad
-    a owl:DatatypeProperty , owl:FunctionalProperty ;
-    rdfs:label "edad"@es ;
-    rdfs:domain vial:Persona ;
-    rdfs:range  xsd:integer ;
-    rdfs:comment "AGE en años (0–110)."@es .
-
-# --------------------------------------------------------------------------
-# Propiedades de datos reutilizadas (sin redefinir su dominio/rango)
-# --------------------------------------------------------------------------
-dcterms:identifier
-    a owl:DatatypeProperty ;
-    rdfs:isDefinedBy <http://purl.org/dc/terms/> ;
-    rdfs:comment "Superpropiedad de vial:idAccidente, vial:idPersona y vial:codigoZona."@es .
-
-dcterms:date
-    a owl:DatatypeProperty ;
-    rdfs:isDefinedBy <http://purl.org/dc/terms/> ;
-    rdfs:comment "Superpropiedad de vial:fechaHora."@es .
-
-schema:gender
-    a rdf:Property ;
-    rdfs:isDefinedBy <https://schema.org/> ;
-    rdfs:comment "Uso en el proyecto: sexo registrado de la vial:Persona como literal (M, F, X)."@es .
-
-skos:prefLabel
-    a owl:AnnotationProperty ;
-    rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core> ;
-    rdfs:comment "Uso en el proyecto: etiqueta preferente de cada valor de catálogo."@es .
-
-geo:asWKT
-    a owl:DatatypeProperty ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
-    rdfs:comment "Uso en el proyecto: punto WKT construido con LONGITUDE y LATITUDE, p. ej. \"POINT(-87.6155 41.7803)\"^^geo:wktLiteral."@es .
+    rdfs:label "nombre de la calle"@es .

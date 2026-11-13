@@ -16,7 +16,8 @@ PREFIJOS = """@prefix vial:   <http://example.org/vialchicago#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
-@prefix schema: <https://schema.org/> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix geo:    <http://www.opengis.net/ont/geosparql#> .
 """
 
@@ -60,10 +61,10 @@ def ejemplo(c, p):
     out = ["# Ejemplo ILUSTRATIVO de instancias (la generación masiva corresponde a 1C)",
            PREFIJOS,
            f"rec:zona_{a.BEAT_OF_OCCURRENCE} a vial:ZonaPolicial ;\n"
-           f'    vial:codigoZona "{a.BEAT_OF_OCCURRENCE}" .\n',
+           f'    dcterms:identifier "{a.BEAT_OF_OCCURRENCE}" .\n',
            f"rec:accidente_{corto} a vial:Accidente ;\n"
-           f'    vial:idAccidente "{cid}" ;\n'
-           f'    vial:fechaHora "{a.CRASH_DATE.replace("Z", "")}"^^xsd:dateTime ;\n'
+           f'    dcterms:identifier "{cid}" ;\n'
+           f'    dcterms:date "{a.CRASH_DATE.replace("Z", "")}"^^xsd:dateTime ;\n'
            f'    vial:nombreCalle "{esc(a.STREET_NAME)}" ;\n'
            f"    vial:ocurreEnZona rec:zona_{a.BEAT_OF_OCCURRENCE} ;\n"
            f"    vial:tipoPrimerImpacto rec:impacto_{slug(a.FIRST_CRASH_TYPE)} ;\n"
@@ -74,9 +75,9 @@ def ejemplo(c, p):
     for _, r in personas.iterrows():
         out.append(
             f"rec:persona_{r.PERSON_ID} a vial:Persona ;\n"
-            f'    vial:idPersona "{r.PERSON_ID}" ;\n'
-            f"    vial:edad {int(r.AGE)} ;\n"
-            f'    schema:gender "{r.SEX}" ;\n'
+            f'    dcterms:identifier "{r.PERSON_ID}" ;\n'
+            f"    foaf:age {int(r.AGE)} ;\n"
+            f'    foaf:gender "{r.SEX}" ;\n'
             f"    vial:participaEn rec:accidente_{corto} ;\n"
             f"    vial:tipoUsuario rec:usuario_{slug(r.PERSON_TYPE)} ;\n"
             f"    vial:clasificacionLesion rec:lesion_{slug(r.INJURY_CLASSIFICATION)} .\n"
