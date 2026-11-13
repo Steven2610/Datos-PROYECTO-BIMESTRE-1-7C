@@ -1,0 +1,130 @@
+@prefix vial:    <http://example.org/vialchicago#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbo:     <http://dbpedia.org/ontology/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix geo:     <http://www.opengis.net/ont/geosparql#> .
+
+# ---------------------------------------------------------------
+# Ontología
+# ---------------------------------------------------------------
+<http://example.org/vialchicago> a owl:Ontology ;
+    rdfs:label "Esquema de movilidad y seguridad vial de Chicago"@es ;
+    rdfs:comment "Esquema semántico para accidentes de tránsito, personas involucradas, zonas policiales y catálogos de clasificación."@es .
+
+# ---------------------------------------------------------------
+# Términos reutilizados (declaración mínima)
+# ---------------------------------------------------------------
+dbo:Event      a owl:Class ;             rdfs:isDefinedBy <http://dbpedia.org/ontology/> .
+foaf:Person    a owl:Class ;             rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
+foaf:age       a owl:DatatypeProperty ;  rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
+foaf:gender    a owl:DatatypeProperty ;  rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/> .
+
+dcterms:identifier a rdf:Property ;      rdfs:isDefinedBy <http://purl.org/dc/terms/> .
+dcterms:date       a rdf:Property ;      rdfs:isDefinedBy <http://purl.org/dc/terms/> .
+
+skos:Concept       a owl:Class ;         rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+skos:ConceptScheme a owl:Class ;         rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+skos:inScheme      a rdf:Property ;      rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+skos:prefLabel     a rdf:Property ;      rdfs:isDefinedBy <http://www.w3.org/2004/02/skos/core#> .
+
+geo:Feature     a owl:Class ;            rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+geo:Geometry    a owl:Class ;            rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+geo:hasGeometry a owl:ObjectProperty ;   rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+geo:asWKT       a owl:DatatypeProperty ; rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql#> .
+
+# ---------------------------------------------------------------
+# Clases propias y jerarquías
+# ---------------------------------------------------------------
+vial:Accidente a owl:Class ;
+    rdfs:subClassOf dbo:Event, geo:Feature ;
+    rdfs:label "Accidente"@es ;
+    rdfs:comment "Accidente de tránsito reportado por la policía de Chicago."@es .
+
+vial:Persona a owl:Class ;
+    rdfs:subClassOf foaf:Person ;
+    rdfs:label "Persona"@es ;
+    rdfs:comment "Persona involucrada en un accidente de tránsito."@es .
+
+vial:ZonaPolicial a owl:Class ;
+    rdfs:subClassOf geo:Feature ;
+    rdfs:label "Zona policial"@es ;
+    rdfs:comment "Zona (beat) policial donde ocurre un accidente."@es .
+
+vial:Catalogo a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Catálogo"@es ;
+    rdfs:comment "Concepto de un vocabulario controlado del proyecto."@es .
+
+vial:TipoUsuario a owl:Class ;
+    rdfs:subClassOf vial:Catalogo ;
+    rdfs:label "Tipo de usuario"@es ;
+    rdfs:comment "Rol de la persona en el accidente: conductor, pasajero, peatón, ciclista, etc."@es .
+
+vial:ClasificacionLesion a owl:Class ;
+    rdfs:subClassOf vial:Catalogo ;
+    rdfs:label "Clasificación de la lesión"@es ;
+    rdfs:comment "Gravedad de la lesión reportada para la persona."@es .
+
+vial:TipoPrimerImpacto a owl:Class ;
+    rdfs:subClassOf vial:Catalogo ;
+    rdfs:label "Tipo de primer impacto"@es ;
+    rdfs:comment "Tipo del primer impacto del accidente."@es .
+
+# ---------------------------------------------------------------
+# Esquemas de conceptos (un vocabulario controlado por catálogo)
+# ---------------------------------------------------------------
+vial:EsquemaTipoUsuario a skos:ConceptScheme ;
+    rdfs:label "Tipos de usuario"@es .
+
+vial:EsquemaClasificacionLesion a skos:ConceptScheme ;
+    rdfs:label "Clasificaciones de lesión"@es .
+
+vial:EsquemaTipoPrimerImpacto a skos:ConceptScheme ;
+    rdfs:label "Tipos de primer impacto"@es .
+
+# ---------------------------------------------------------------
+# Propiedades de objeto propias
+# ---------------------------------------------------------------
+vial:ocurreEnZona a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain vial:Accidente ;
+    rdfs:range  vial:ZonaPolicial ;
+    rdfs:label "ocurre en zona"@es .
+
+vial:involucraPersona a owl:ObjectProperty ;
+    rdfs:domain vial:Accidente ;
+    rdfs:range  vial:Persona ;
+    rdfs:label "involucra persona"@es .
+
+vial:participaEn a owl:ObjectProperty, owl:FunctionalProperty ;
+    owl:inverseOf vial:involucraPersona ;
+    rdfs:domain vial:Persona ;
+    rdfs:range  vial:Accidente ;
+    rdfs:label "participa en"@es .
+
+vial:tipoUsuario a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain vial:Persona ;
+    rdfs:range  vial:TipoUsuario ;
+    rdfs:label "tipo de usuario"@es .
+
+vial:clasificacionLesion a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain vial:Persona ;
+    rdfs:range  vial:ClasificacionLesion ;
+    rdfs:label "clasificación de lesión"@es .
+
+vial:tipoPrimerImpacto a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain vial:Accidente ;
+    rdfs:range  vial:TipoPrimerImpacto ;
+    rdfs:label "tipo de primer impacto"@es .
+
+# ---------------------------------------------------------------
+# Propiedades de datos propias
+# ---------------------------------------------------------------
+vial:nombreCalle a owl:DatatypeProperty ;
+    rdfs:domain vial:Accidente ;
+    rdfs:range  xsd:string ;
+    rdfs:label "nombre de la calle"@es .
