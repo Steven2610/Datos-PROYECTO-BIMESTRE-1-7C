@@ -1,0 +1,39 @@
+# Ejemplo ILUSTRATIVO de instancias (la generación masiva corresponde a 1C)
+@prefix vial:   <http://example.org/vialchicago#> .
+@prefix rec:    <http://example.org/vialchicago/recurso/> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <https://schema.org/> .
+@prefix geo:    <http://www.opengis.net/ont/geosparql#> .
+
+rec:zona_2531 a vial:ZonaPolicial ;
+    vial:codigoZona "2531" .
+
+rec:accidente_5f2edaf32f81 a vial:Accidente ;
+    vial:idAccidente "5f2edaf32f81c648a463a5a214934c05b5aa82f63004ab41e8cc66d5859f3d78137941d9c90abd6ace116e6b35cfba19f81c98904ed8c87229e443a89d69a3b0" ;
+    vial:fechaHora "2026-11-11T23:36:00"^^xsd:dateTime ;
+    vial:nombreCalle "NORTH AVE" ;
+    vial:ocurreEnZona rec:zona_2531 ;
+    vial:tipoPrimerImpacto rec:impacto_SideswipeSameDirection ;
+    geo:hasGeometry rec:geom_5f2edaf32f81 ;
+    vial:involucraPersona rec:persona_O2431560 , rec:persona_O2431561 .
+
+rec:geom_5f2edaf32f81 a geo:Geometry ;
+    geo:asWKT "POINT(-87.775458888 41.9091455375)"^^geo:wktLiteral .
+
+rec:persona_O2431560 a vial:Persona ;
+    vial:idPersona "O2431560" ;
+    vial:edad 29 ;
+    schema:gender "F" ;
+    vial:participaEn rec:accidente_5f2edaf32f81 ;
+    vial:tipoUsuario rec:usuario_Driver ;
+    vial:clasificacionLesion rec:lesion_NoIndicationOfInjury .
+
+rec:persona_O2431561 a vial:Persona ;
+    vial:idPersona "O2431561" ;
+    vial:edad 26 ;
+    schema:gender "F" ;
+    vial:participaEn rec:accidente_5f2edaf32f81 ;
+    vial:tipoUsuario rec:usuario_Driver ;
+    vial:clasificacionLesion rec:lesion_NoIndicationOfInjury .

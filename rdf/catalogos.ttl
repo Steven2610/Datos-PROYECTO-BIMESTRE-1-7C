@@ -1,0 +1,102 @@
+# Valores de catálogo generados desde los datos limpios (scripts/generar_catalogos.py)
+@prefix vial:   <http://example.org/vialchicago#> .
+@prefix rec:    <http://example.org/vialchicago/recurso/> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <https://schema.org/> .
+@prefix geo:    <http://www.opengis.net/ont/geosparql#> .
+
+
+# ---- vial:TipoPrimerImpacto ----
+rec:impacto_RearEnd a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "REAR END"@en .   # 72269 registros
+rec:impacto_SideswipeSameDirection a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "SIDESWIPE SAME DIRECTION"@en .   # 59866 registros
+rec:impacto_Turning a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "TURNING"@en .   # 56462 registros
+rec:impacto_Angle a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "ANGLE"@en .   # 40050 registros
+rec:impacto_ParkedMotorVehicle a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "PARKED MOTOR VEHICLE"@en .   # 37164 registros
+rec:impacto_FixedObject a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "FIXED OBJECT"@en .   # 11799 registros
+rec:impacto_Pedestrian a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "PEDESTRIAN"@en .   # 9911 registros
+rec:impacto_Pedalcyclist a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "PEDALCYCLIST"@en .   # 8542 registros
+rec:impacto_RearToFront a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "REAR TO FRONT"@en .   # 5902 registros
+rec:impacto_SideswipeOppositeDirection a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "SIDESWIPE OPPOSITE DIRECTION"@en .   # 4645 registros
+rec:impacto_RearToSide a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "REAR TO SIDE"@en .   # 3475 registros
+rec:impacto_OtherObject a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "OTHER OBJECT"@en .   # 3126 registros
+rec:impacto_HeadOn a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "HEAD ON"@en .   # 2887 registros
+rec:impacto_RearToRear a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "REAR TO REAR"@en .   # 1187 registros
+rec:impacto_OtherNoncollision a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "OTHER NONCOLLISION"@en .   # 689 registros
+rec:impacto_Animal a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "ANIMAL"@en .   # 229 registros
+rec:impacto_Overturned a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "OVERTURNED"@en .   # 165 registros
+rec:impacto_Train a vial:TipoPrimerImpacto ;
+    skos:inScheme vial:EsquemaTipoPrimerImpacto ;
+    skos:prefLabel "TRAIN"@en .   # 15 registros
+
+# ---- vial:TipoUsuario ----
+rec:usuario_Driver a vial:TipoUsuario ;
+    skos:inScheme vial:EsquemaTipoUsuario ;
+    skos:prefLabel "DRIVER"@en .   # 480268 registros
+rec:usuario_Passenger a vial:TipoUsuario ;
+    skos:inScheme vial:EsquemaTipoUsuario ;
+    skos:prefLabel "PASSENGER"@en .   # 101256 registros
+rec:usuario_Pedestrian a vial:TipoUsuario ;
+    skos:inScheme vial:EsquemaTipoUsuario ;
+    skos:prefLabel "PEDESTRIAN"@en .   # 10223 registros
+rec:usuario_Bicycle a vial:TipoUsuario ;
+    skos:inScheme vial:EsquemaTipoUsuario ;
+    skos:prefLabel "BICYCLE"@en .   # 7651 registros
+rec:usuario_NonMotorVehicle a vial:TipoUsuario ;
+    skos:inScheme vial:EsquemaTipoUsuario ;
+    skos:prefLabel "NON-MOTOR VEHICLE"@en .   # 554 registros
+rec:usuario_NonContactVehicle a vial:TipoUsuario ;
+    skos:inScheme vial:EsquemaTipoUsuario ;
+    skos:prefLabel "NON-CONTACT VEHICLE"@en .   # 47 registros
+
+# ---- vial:ClasificacionLesion ----
+rec:lesion_NoIndicationOfInjury a vial:ClasificacionLesion ;
+    skos:inScheme vial:EsquemaClasificacionLesion ;
+    skos:prefLabel "NO INDICATION OF INJURY"@en .   # 519135 registros
+rec:lesion_NonincapacitatingInjury a vial:ClasificacionLesion ;
+    skos:inScheme vial:EsquemaClasificacionLesion ;
+    skos:prefLabel "NONINCAPACITATING INJURY"@en .   # 42925 registros
+rec:lesion_ReportedNotEvident a vial:ClasificacionLesion ;
+    skos:inScheme vial:EsquemaClasificacionLesion ;
+    skos:prefLabel "REPORTED, NOT EVIDENT"@en .   # 31529 registros
+rec:lesion_IncapacitatingInjury a vial:ClasificacionLesion ;
+    skos:inScheme vial:EsquemaClasificacionLesion ;
+    skos:prefLabel "INCAPACITATING INJURY"@en .   # 6081 registros
+rec:lesion_Fatal a vial:ClasificacionLesion ;
+    skos:inScheme vial:EsquemaClasificacionLesion ;
+    skos:prefLabel "FATAL"@en .   # 329 registros

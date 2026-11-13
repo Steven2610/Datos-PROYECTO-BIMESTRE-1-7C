@@ -1,0 +1,27 @@
+fuente,metrica,valor
+crashes,1_filas_archivo_original,1112728
+crashes,2_duplicados_por_clave,0
+crashes,3_nulos_CRASH_RECORD_ID,0
+crashes,3_nulos_CRASH_DATE,0
+crashes,3_nulos_BEAT_OF_OCCURRENCE,5
+crashes,3_nulos_LATITUDE,8806
+crashes,3_nulos_LONGITUDE,8806
+crashes,3_nulos_STREET_NAME,1
+crashes,3_nulos_FIRST_CRASH_TYPE,0
+crashes,4_filas_sin_nulos_ni_duplicados,1103919
+people,1_filas_archivo_original,2441932
+people,2_duplicados_por_clave,0
+people,3_nulos_PERSON_ID,0
+people,3_nulos_CRASH_RECORD_ID,0
+people,3_nulos_PERSON_TYPE,0
+people,3_nulos_AGE,706885
+people,3_nulos_SEX,42199
+people,3_nulos_INJURY_CLASSIFICATION,828
+people,4_filas_sin_nulos_ni_duplicados,1729305
+people,5_sin_accidente_en_crashes_limpio,15343
+crashes,5_sin_personas_en_people_limpio,197449
+final,crashes_filas,318383
+final,people_filas,599999
+final,union_filas,599999
+final,rango_fechas,2023-05-19 a 2026-11-12
+final,distribucion_PERSON_TYPE,BICYCLE=7651; DRIVER=480268; NON-CONTACT VEHICLE=47; NON-MOTOR VEHICLE=554; PASSENGER=101256; PEDESTRIAN=10223

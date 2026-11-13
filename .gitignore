@@ -1,0 +1,17 @@
+# CSV completos descargados (demasiado grandes para GitHub)
+Traffic_Crashes_-_*.csv
+datos/originales/*.csv
+!datos/originales/*_muestra.csv
+
+# CSV descomprimidos (se versionan los .zip)
+datos/procesados/*.csv
+!datos/procesados/calidad_etl.csv
+
+# R / Python / sistema
+.Rhistory
+.RData
+.Rproj.user/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
