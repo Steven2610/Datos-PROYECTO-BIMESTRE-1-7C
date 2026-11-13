@@ -4,8 +4,8 @@
 Práctica bimestral · **Explotación de datos en ecosistemas heterogéneos** · UTPL
 Entrega actual: **1B – Obtención de datos y diseño del modelo de conocimiento**
 
-> Grupo 4 · Integrantes: Steven Vega, Andrés Cuenca, Santiago Matute
-> Docente: Ángel Eduardo Encalada Encalada
+> Integrantes: Santiago Matute, Steven Vega, Andres Cuenca
+> Docente: Ángel Eduardo Encalada
 
 ---
 
